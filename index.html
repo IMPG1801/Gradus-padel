@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1B5FAE">
+<title>Gradus Padel : trouve ton point faible au padel</title>
+<meta name="description" content="14 questions, 3 minutes, gratuit. Découvre ton point faible au padel : placement, communication, technique, montée au filet ou contrôle.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Gradus Padel : trouve ton point faible au padel">
+<meta property="og:description" content="14 questions, 3 minutes, gratuit. Ton score sur 5 thèmes et ta priorité à travailler.">
+<meta property="og:image" content="https://graduspadel.com/og.png">
+<meta property="og:url" content="https://graduspadel.com/">
+<meta property="og:locale" content="fr_FR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap">
+<style>
+/* Concept: une feuille de match, une question par écran, réponses au pouce. Bleu de terrain, jaune de balle réservé aux points forts du résultat. */
+:root{
+  --bg:#1B5FAE; --soft:#EEF2F5; --on:#FFFFFF; --on2:rgba(255,255,255,.84); --court-op:.4; --card:#FFFFFF; --ink:#0F2230; --muted:#53697A; --line:#D3DDE4;
+  --court:#1D5FA6; --court-ink:#FFFFFF; --ball:#C9DB2F; --weak:#C2410C; --track:#DCE5EB;
+  --display:"Barlow Condensed","Arial Narrow",sans-serif; --body:"Barlow",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0B2545; --soft:#1B3556; --on:#EAF1F5; --on2:rgba(234,241,245,.82); --court-op:.3; --card:#12294A; --ink:#EAF1F5; --muted:#93A7B5; --line:#26404D;
+  --court:#5AA0E6; --court-ink:#07202F; --ball:#D6E84A; --weak:#F08A55; --track:#223946; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0B2545; --soft:#1B3556; --on:#EAF1F5; --on2:rgba(234,241,245,.82); --court-op:.3; --card:#12294A; --ink:#EAF1F5; --muted:#93A7B5; --line:#26404D;
+  --court:#5AA0E6; --court-ink:#07202F; --ball:#D6E84A; --weak:#F08A55; --track:#223946; color-scheme:dark}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--on);font-family:var(--body);font-size:17px;line-height:1.45;
+  padding-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-right,0px));padding-block:20px 40px}
+main{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+h1,h2{font-family:var(--display);font-weight:700;line-height:1.05;margin:0;text-wrap:balance}
+h1{font-size:2.6rem;letter-spacing:.01em}
+h2{font-size:1.9rem}
+p{margin:0}
+.eyebrow{font-family:var(--display);font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:.95rem;color:var(--court)}
+.muted{color:var(--muted)}
+.card{color:var(--ink);box-shadow:0 8px 24px rgba(0,0,0,.18);background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:16px}
+button{font:inherit;color:inherit;cursor:pointer}
+.primary{background:var(--court);color:var(--court-ink);border:0;border-radius:12px;padding:16px 20px;font-weight:600;font-size:1.05rem;min-height:52px}
+.ghost{background:none;border:0;color:var(--on2);padding:10px 4px;font-size:.95rem;text-align:left;align-self:flex-start}
+button:focus-visible,textarea:focus-visible{outline:3px solid var(--court);outline-offset:2px}
+.progress{display:flex;align-items:center;gap:12px}
+.bar{flex:1;height:8px;border-radius:99px;background:rgba(255,255,255,.28);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--ball);border-radius:99px;transition:width .25s}
+.count{font-family:var(--display);font-weight:600;font-size:1.05rem;color:var(--on2);font-variant-numeric:tabular-nums}
+.theme{font-family:var(--display);font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-size:.9rem;color:var(--muted)}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{background:var(--soft);border:1.5px solid var(--line);border-radius:12px;padding:15px 16px;text-align:left;min-height:54px;font-size:1.02rem}
+.opt:active{border-color:var(--court)}
+.opt.sel{border-color:var(--court);background:color-mix(in srgb,var(--court) 14%,var(--card))}
+textarea{width:100%;box-sizing:border-box;min-height:110px;border:1.5px solid var(--line);border-radius:12px;padding:14px;background:var(--soft);color:var(--ink);font:inherit;resize:vertical}
+.row{display:flex;flex-direction:column;gap:6px}
+.row .top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.row .name{font-weight:600}
+.row .val{font-family:var(--display);font-weight:700;font-size:1.3rem;font-variant-numeric:tabular-nums}
+.meter{display:grid;grid-template-columns:repeat(6,1fr);gap:4px}
+.meter i{height:12px;border-radius:3px;background:var(--track)}
+.meter i.on{background:var(--court)}
+.meter.strong i.on{background:var(--ball)}
+.meter.weak i.on{background:var(--weak)}
+.tag{font-size:.85rem;font-weight:600;border-radius:99px;padding:2px 10px;border:1.5px solid var(--line);color:var(--muted);white-space:nowrap}
+.tag.weak{border-color:var(--weak);color:var(--weak)}
+.priority{border-left:6px solid var(--weak);padding-left:14px;display:flex;flex-direction:column;gap:4px}
+.priority .big{font-family:var(--display);font-weight:700;font-size:2.3rem;line-height:1}
+dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:8px 14px}
+dt{color:var(--muted)} dd{margin:0;font-weight:600;min-width:0;overflow-wrap:anywhere}
+.actions{display:flex;flex-direction:column;gap:10px}
+.secondary{background:none;color:var(--on);border:1.5px solid var(--on2);border-radius:12px;padding:14px 18px;font-weight:600;min-height:52px}
+.ex{display:flex;flex-direction:column;gap:4px;padding-top:12px;border-top:1px solid var(--line)}
+.ex:first-of-type{border-top:0;padding-top:0}
+.exh{display:flex;flex-direction:column;gap:2px}
+.exd{color:var(--muted);font-size:.9rem}
+.sk{display:flex;flex-direction:column;gap:7px;margin-top:2px}
+.sk i{display:block;height:11px;border-radius:6px;background:var(--track)}
+.lk{font-weight:600}
+.primary:disabled{opacity:.55;cursor:default}
+.gains{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:10px}
+.price{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.amt{font-family:var(--display);font-weight:700;font-size:2.6rem;line-height:1}
+.btn{display:block;text-align:center;text-decoration:none;box-sizing:border-box}
+footer{max-width:560px;margin:28px auto 0;display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.92rem;color:var(--on2)}
+footer a{color:var(--on)}.legal a{color:var(--court)}
+.legal{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:12px;background:var(--card);color:var(--ink);border-radius:14px;padding:20px;box-shadow:0 8px 24px rgba(0,0,0,.18)}
+.legal h1{font-size:2.2rem}.legal h2{font-size:1.45rem;margin-top:10px}
+.legal ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.todo{background:color-mix(in srgb,var(--weak) 18%,var(--card));padding:1px 6px;border-radius:4px;font-weight:600;text-transform:uppercase;font-size:.85em}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-20 -20 440 840' fill='none' stroke='white' stroke-width='5'%3E%3Crect x='0' y='0' width='400' height='800'/%3E%3Cline x1='0' y1='400' x2='400' y2='400' stroke-width='10'/%3E%3Cline x1='0' y1='122' x2='400' y2='122'/%3E%3Cline x1='0' y1='678' x2='400' y2='678'/%3E%3Cline x1='200' y1='122' x2='200' y2='678'/%3E%3Ccircle cx='312' cy='520' r='15' fill='%23D6E43C' stroke='none'/%3E%3C/svg%3E") center/auto 100% no-repeat;opacity:var(--court-op);pointer-events:none}
+.brand{max-width:560px;margin:0 auto 18px;display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:700;font-size:1.5rem;letter-spacing:.02em;color:var(--on)}
+.brand svg{width:34px;height:34px;flex:none}
+.hero{display:flex;flex-direction:column;gap:16px;padding:8px 0 4px}
+.hero h1{font-size:3.1rem;color:var(--on)}
+.hero .eyebrow{color:var(--ball)}
+.hero p{color:var(--on2);font-size:1.1rem}
+.ball{background:var(--ball)!important;color:#0F2230!important}
+.actions .muted{color:var(--on2)}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<header class="brand"><svg viewBox="-100 -100 200 200" aria-hidden="true"><circle r="92" fill="#D6E43C"/><path d="M-66 -62 C-26 -34 -26 34 -66 62" fill="none" stroke="#0B2545" stroke-width="12" stroke-linecap="round"/><path d="M66 -62 C26 -34 26 34 66 62" fill="none" stroke="#0B2545" stroke-width="12" stroke-linecap="round"/></svg><span>Gradus Padel</span></header>
+<main id="app"></main>
+
+<section id="mentions" class="legal" hidden>
+<a href="#">← Retour au test</a>
+<h1>Mentions légales</h1>
+<h2>Éditeur du site</h2>
+<p>Gradus Padel est édité par Grégory Éric PRAVE, entrepreneur individuel (micro-entrepreneur).</p>
+<ul>
+<li>Adresse : 43 bis chemin des Mûriers, 01600 Parcieux</li>
+<li>SIRET : <span class="todo">À compléter après immatriculation</span></li>
+<li>Courriel : gradus.padel.contact@gmail.com</li>
+<li>Téléphone : <span class="todo">À compléter</span></li>
+<li>Directeur de la publication : Grégory Éric PRAVE</li>
+<li>TVA non applicable, article 293 B du Code général des impôts.</li>
+</ul>
+<h2>Hébergeur</h2>
+<p>Vercel Inc., <span class="todo">adresse à compléter</span>. Site : vercel.com.</p>
+<h2>Médiation de la consommation</h2>
+<p>Conformément au Code de la consommation, tout consommateur peut recourir gratuitement à un médiateur : <span class="todo">nom et coordonnées du médiateur à compléter</span>.</p>
+<h2>Nature du service</h2>
+<p>Gradus Padel propose un diagnostic indicatif et des exercices d'entraînement. Ce ne sont ni un avis médical, ni un avis de professionnel de santé, ni un programme de coaching individuel.</p>
+<h2>Propriété intellectuelle</h2>
+<p>Les textes, questions, exercices et visuels du site sont la propriété de l'éditeur. Toute reproduction sans accord écrit est interdite.</p>
+</section>
+
+<section id="cgv" class="legal" hidden>
+<a href="#">← Retour au test</a>
+<h1>Conditions générales de vente</h1>
+<h2>Vendeur</h2>
+<p>Grégory Éric PRAVE, entrepreneur individuel, 43 bis chemin des Mûriers, 01600 Parcieux. SIRET : <span class="todo">à compléter</span>. Courriel : gradus.padel.contact@gmail.com.</p>
+<h2>Produit vendu</h2>
+<p>Le diagnostic en ligne est gratuit. Le produit payant, « Exercices complets », donne accès au détail des exercices des deux thèmes prioritaires du joueur, envoyé par courriel. Prix : 19,99 € toutes taxes comprises, paiement unique, sans abonnement. TVA non applicable, article 293 B du Code général des impôts.</p>
+<h2>Commande et paiement</h2>
+<p>Le paiement se fait en ligne par carte, via le prestataire Stripe. La commande est ferme à la confirmation du paiement.</p>
+<h2>Livraison</h2>
+<p>Le contenu est envoyé par courriel à l'adresse saisie lors du paiement, en général sous 24 heures. En l'absence de réception, écris à gradus.padel.contact@gmail.com.</p>
+<h2>Satisfait ou remboursé</h2>
+<p>Pendant 14 jours après l'achat, tu peux demander le remboursement intégral, sans justification, en écrivant à gradus.padel.contact@gmail.com. Le remboursement est effectué sous 5 jours ouvrés sur le moyen de paiement utilisé. Cette garantie s'ajoute à tes droits légaux.</p>
+<h2>Santé et responsabilité</h2>
+<p>Les exercices sont des suggestions de jeu et de pratique. Pratique le padel selon ta condition physique et consulte un médecin en cas de doute. Les résultats du diagnostic sont indicatifs. L'éditeur ne garantit aucun résultat sportif.</p>
+<h2>Données personnelles</h2>
+<p>Voir la politique de confidentialité.</p>
+<h2>Médiation et droit applicable</h2>
+<p>En cas de litige, tu peux recourir gratuitement à un médiateur de la consommation : <span class="todo">à compléter</span>. Le droit français s'applique.</p>
+</section>
+
+<section id="confidentialite" class="legal" hidden>
+<a href="#">← Retour au test</a>
+<h1>Politique de confidentialité</h1>
+<h2>Responsable du traitement</h2>
+<p>Grégory Éric PRAVE, 43 bis chemin des Mûriers, 01600 Parcieux. Courriel : gradus.padel.contact@gmail.com.</p>
+<h2>Données et usage</h2>
+<ul>
+<li><b>Réponses au diagnostic.</b> Elles sont calculées dans ton navigateur et ne sont pas enregistrées par l'éditeur. Si tu achètes, ton score et tes deux thèmes prioritaires sont transmis à l'éditeur via le paiement, pour t'envoyer les bons exercices.</li>
+<li><b>Paiement.</b> Ton adresse courriel et les données de paiement sont traitées par Stripe. L'éditeur n'a pas accès à ton numéro de carte.</li>
+<li><b>Texte libre (« autre point faible »).</b> Il reste dans ton navigateur et n'est pas envoyé.</li>
+</ul>
+<h2>Bases légales et durées</h2>
+<p>Exécution du contrat pour la livraison. Obligation légale pour la facturation : conservation 10 ans. Les échanges de courriel sont conservés au plus 3 ans.</p>
+<h2>Destinataires</h2>
+<p>Stripe (paiement), Vercel (hébergement), Google (courriel et polices de caractères du site). Ces prestataires peuvent traiter des données hors de l'Union européenne avec des garanties appropriées.</p>
+<h2>Cookies</h2>
+<p>Le site n'utilise pas de cookie de suivi ou de publicité.</p>
+<h2>Tes droits</h2>
+<p>Tu peux demander l'accès, la rectification ou la suppression de tes données en écrivant à gradus.padel.contact@gmail.com. Tu peux aussi saisir la CNIL (cnil.fr).</p>
+</section>
+
+<footer><a href="#mentions">Mentions légales</a><a href="#cgv">CGV</a><a href="#confidentialite">Confidentialité</a></footer>
+
+
+<script>
+(function(){
+var Q=[
+{k:"ctx1",t:"Contexte",q:"Depuis combien de temps joues-tu au padel ?",o:["Moins de 6 mois","De 6 mois à 2 ans","Plus de 2 ans"]},
+{k:"ctx2",t:"Contexte",q:"Combien de fois joues-tu par semaine ?",o:["Moins d'une fois","Une fois","Deux fois ou plus"]},
+{k:"shot",t:"Contexte",q:"Quel coup te fait perdre le plus de points ?",o:["Bandeja","Víbora","Volée","Sortie de vitre","Service","Smash"]},
+{k:"avoid",t:"Contexte",q:"Quel coup évites-tu de jouer quand tu peux ?",o:["Bandeja","Víbora","Volée","Sortie de vitre","Service","Smash"]},
+{k:"pla",t:"Placement",q:"Quand vous attaquez, comment est ton placement par rapport à ton partenaire ?",o:["Souvent l'un derrière l'autre, en désordre","Parfois décalés","Côte à côte, à la même hauteur"]},
+{k:"pla",t:"Placement",q:"Après avoir renvoyé une balle depuis le fond du terrain (défense ou lob), que fais-tu ?",o:["Je regarde ma balle","Je me replace parfois","Je me replace tout de suite"]},
+{k:"com",t:"Communication",q:"Sur une balle au milieu, que se passe-t-il le plus souvent ?",o:["On se gêne ou on la laisse passer","L'un la prend sans rien dire","L'un annonce « à moi » avant"]},
+{k:"com",t:"Communication",q:"Après un point perdu, que vous dites-vous ?",o:["Rien, ou des reproches","On parle du point en général","On corrige une seule chose en une phrase"]},
+{k:"tec",t:"Technique",q:"Sur 10 volées, combien passent dans la zone que tu visais ?",o:["0 à 3","4 à 6","7 ou plus"]},
+{k:"tec",t:"Technique",q:"Sur 10 balles qui sortent de la vitre, combien renvoies-tu dans le terrain ?",o:["0 à 3","4 à 6","7 ou plus"]},
+{k:"fil",t:"Montée au filet",q:"Après ton service ou ton retour, montes-tu au filet ?",o:["Jamais","Rarement","Dès que possible"]},
+{k:"fil",t:"Montée au filet",q:"Quand vous prenez le filet, combien de temps le gardez-vous ?",o:["On le perd vite","On le garde un ou deux échanges, puis on recule","Jusqu'à la fin du point"]},
+{k:"con",t:"Contrôle",q:"Sur 10 coups joués dans un échange, combien finissent directement dans la vitre d'en face ou dans le filet ?",o:["4 ou plus","De 2 à 3","0 ou 1"]},
+{k:"con",t:"Contrôle",q:"Quand tu es en difficulté (balle rapide, mal placé), que fais-tu ?",o:["J'essaie de gagner le point d'un coup","Ça dépend","Je joue lent et profond pour revenir dans le point"]}
+];
+var NAMES={pla:"Placement",com:"Communication",tec:"Technique",fil:"Montée au filet",con:"Contrôle"};
+var EXO={"com": [["Le mot avant la balle", "pendant le match"], ["La règle du milieu fixée avant le match", "avant le match, 5 min"], ["Le lob qui oblige à reculer", "pendant le match"]], "pla": [["Les pieds sur la même ligne", "pendant le match"], ["Reprendre le filet ensemble après un lob", "pendant le match"]], "tec": [["Les volées dans la zone", "pendant le match"], ["Les sorties de vitre", "pendant le match"]], "fil": [["Monter après le service ou le retour", "pendant le match"], ["Garder le filet", "pendant le match"]], "con": [["Retenir sa balle", "pendant le match"], ["Le lob précis", "pendant le match"]]};
+var ORDER=["con","pla","com","tec","fil"]; /* ordre de départage en cas d'égalité */
+var ans=[],step=-1,other="";
+var app=document.getElementById("app");
+function el(h){var d=document.createElement("div");d.innerHTML=h;return d.firstElementChild}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+
+function intro(){
+  app.innerHTML="";
+  app.appendChild(el('<div class="hero"><span class="eyebrow">Diagnostic gratuit</span><h1>Trouve ton point faible au padel.</h1>'+
+  '<p>14 questions, 3 minutes, gratuit. Tu reçois ton score sur 5 thèmes et le thème à travailler en priorité.</p>'+
+  '<button class="primary ball" id="go">Commencer, c\'est gratuit</button></div>'));
+  app.appendChild(el('<div class="card"><h2>Ce que tu obtiens</h2><ul class="gains">'+
+  '<li><b>Gratuit.</b> Ton score sur 6 pour le placement, la communication, la technique, la montée au filet et le contrôle.</li>'+
+  '<li><b>Gratuit.</b> Ta priorité numéro un et ton deuxième thème.</li>'+
+  '<li><b>19,99 €, une seule fois.</b> Des exercices pour ces deux thèmes, à jouer pendant un vrai match, jamais en phase arrêtée.</li></ul>'+
+  '<p class="muted">Sans abonnement. Satisfait ou remboursé pendant 14 jours.</p></div>'));
+  document.getElementById("go").onclick=function(){step=0;render();window.scrollTo(0,0)};
+}
+function render(){
+  if(step<0)return intro();
+  if(step===Q.length)return otherStep();
+  if(step>Q.length)return result();
+  var q=Q[step];
+  app.innerHTML="";
+  var pct=Math.round(step/Q.length*100);
+  var h='<div class="progress"><div class="bar"><i style="width:'+pct+'%"></i></div><span class="count">'+(step+1)+' / '+Q.length+'</span></div>'+
+  '<div class="card"><span class="theme">'+esc(q.t)+'</span><h2>'+esc(q.q)+'</h2><div class="opts">'+
+  q.o.map(function(o,i){return '<button class="opt'+(ans[step]===i?' sel':'')+'" data-i="'+i+'">'+esc(o)+'</button>'}).join("")+
+  '</div></div>'+(step>0?'<button class="ghost" id="back">← Question précédente</button>':'');
+  app.innerHTML=h;
+  Array.prototype.forEach.call(app.querySelectorAll(".opt"),function(b){
+    b.onclick=function(){ans[step]=+b.getAttribute("data-i");b.classList.add("sel");setTimeout(function(){step++;render();window.scrollTo(0,0)},160)}
+  });
+  var bk=document.getElementById("back");if(bk)bk.onclick=function(){step--;render()};
+}
+function otherStep(){
+  app.innerHTML='<div class="progress"><div class="bar"><i style="width:100%"></i></div><span class="count">Dernière étape</span></div>'+
+  '<div class="card"><span class="theme">Facultatif</span><h2>Autre point faible ?</h2>'+
+  '<p class="muted">Y a-t-il autre chose que tu veux travailler ? Écris-le avec tes mots.</p>'+
+  '<textarea id="oth" placeholder="Par exemple : mon service, ma condition physique…">'+esc(other)+'</textarea>'+
+  '<button class="primary" id="fin">Voir mon résultat</button></div>'+
+  '<button class="ghost" id="back">← Question précédente</button>';
+  document.getElementById("fin").onclick=function(){other=document.getElementById("oth").value.trim();step=Q.length+1;render();window.scrollTo(0,0)};
+  document.getElementById("back").onclick=function(){other=document.getElementById("oth").value;step=Q.length-1;render()};
+}
+function scores(){
+  var s={pla:0,com:0,tec:0,fil:0,con:0};
+  Q.forEach(function(q,i){if(s.hasOwnProperty(q.k))s[q.k]+=ans[i]+1});
+  return s;
+}
+function exCard(k,lab){
+  var h='<div class="card"><span class="theme">'+lab+'</span><h2>Exercices : '+NAMES[k]+'</h2>';
+  EXO[k].forEach(function(e,i){h+='<div class="ex"><div class="exh"><b>'+(i+1)+'. '+esc(e[0])+'</b><span class="exd">'+esc(e[1])+' · <span class="lk">Verrouillé</span></span></div><div class="sk" aria-hidden="true"><i></i><i></i><i style="width:60%"></i></div></div>'});
+  return h+'</div>';
+}
+var PAY=""; /* lien de paiement Stripe en mode réel, à remplir quand le SIRET est reçu */
+function unlock(a,b,sc,shot,avoid){
+  var n=EXO[a].length+EXO[b].length;
+  var ref="pri-"+a+"_sec-"+b+"_"+ORDER.map(function(k){return k+sc[k]}).join("-")+"_sh"+shot+"-av"+avoid;
+  var btn=PAY?'<a class="primary btn" href="'+PAY+'?client_reference_id='+ref+'">Débloquer mes '+n+' exercices pour 19,99 €</a>':'<button class="primary" disabled>Bientôt disponible : 19,99 €, une seule fois</button>';
+  return '<div class="card"><span class="theme">Exercices complets</span><h2>Débloque tes '+n+' exercices</h2>'+
+  '<p>Tu vois les titres de tes exercices pour '+NAMES[a]+' et '+NAMES[b]+'. Le détail de chaque exercice, avec son objectif chiffré, t\'est envoyé par courriel après le paiement, en général sous 24 h. Tous se jouent pendant un vrai match.</p>'+
+  '<div class="price"><span class="amt">19,99 €</span><span class="muted">paiement unique, sans abonnement</span></div>'+btn+
+  (PAY?'':'<p class="muted">Le paiement n\'est pas encore ouvert.</p>')+
+  '<p class="muted"><b>Satisfait ou remboursé 14 jours.</b> Écris à gradus.padel.contact@gmail.com : tu es remboursé sous 5 jours ouvrés, sans justification.</p></div>';
+}
+function result(){
+  var s=scores();
+  var ranked=ORDER.slice().sort(function(a,b){return s[a]-s[b]||ORDER.indexOf(a)-ORDER.indexOf(b)});
+  var first=ranked[0],second=ranked[1];
+  var i7=Q.findIndex(function(q){return q.k==="shot"});
+  var shot=Q[i7].o[ans[i7]],i7s=ans[i7];
+  var i8=Q.findIndex(function(q){return q.k==="avoid"});
+  var avoid=Q[i8].o[ans[i8]],i8s=ans[i8];
+  var lvl=["Moins de 6 mois","De 6 mois à 2 ans","Plus de 2 ans"][ans[0]];
+  var freq=["Moins d'une fois par semaine","Une fois par semaine","Deux fois ou plus par semaine"][ans[1]];
+  var rows=ORDER.map(function(k){
+    var v=s[k],cls=v<=3?"weak":(v===6?"strong":"");
+    var lab=v<=3?'<span class="tag weak">À travailler</span>':(v===6?'<span class="tag">Solide</span>':'<span class="tag">Correct</span>');
+    var m="";for(var i=1;i<=6;i++)m+='<i'+(i<=v?' class="on"':'')+'></i>';
+    return '<div class="row"><div class="top"><span class="name">'+NAMES[k]+'</span><span>'+lab+' <span class="val">'+v+'/6</span></span></div><div class="meter '+cls+'">'+m+'</div></div>';
+  }).join("");
+  app.innerHTML='<div class="card"><span class="eyebrow">Ton résultat</span>'+
+  '<div class="priority"><span class="theme">Priorité numéro un</span><span class="big">'+NAMES[first]+'</span>'+
+  '<span class="muted">Deuxième thème : '+NAMES[second]+'</span></div></div>'+
+  '<div class="card"><h2>Tes scores</h2>'+rows+'</div>'+
+  exCard(first,"Priorité numéro un")+exCard(second,"Deuxième thème")+unlock(first,second,s,i7s,i8s)+
+  '<div class="card"><h2>Ton profil</h2><dl><dt>Niveau</dt><dd>'+esc(lvl)+'</dd><dt>Rythme</dt><dd>'+esc(freq)+'</dd><dt>Coup qui coûte des points</dt><dd>'+esc(shot)+'</dd><dt>Coup que tu évites</dt><dd>'+esc(avoid)+'</dd>'+
+  (other?'<dt>Autre point faible</dt><dd>'+esc(other)+'</dd>':'')+'</dl>'+
+  '</div>'+
+  '<div class="actions"><button class="primary ball" id="cp">Copier mon résultat</button><button class="secondary" id="re">Refaire le test</button><p class="muted" id="msg" hidden></p></div>';
+  var txt="Diagnostic padel\nPriorité : "+NAMES[first]+" (puis "+NAMES[second]+")\n"+ORDER.map(function(k){return NAMES[k]+" : "+s[k]+"/6"}).join("\n")+"\nCoup qui coûte des points : "+shot+"\nCoup évité : "+avoid+(other?"\nAutre point faible : "+other:"");
+  var msg=document.getElementById("msg");
+  document.getElementById("cp").onclick=function(){
+    function done(t){msg.hidden=false;msg.textContent=t}
+    try{navigator.clipboard.writeText(txt).then(function(){done("Résultat copié. Tu peux le coller dans un message.")},function(){done(txt)})}catch(e){done(txt)}
+  };
+  document.getElementById("re").onclick=function(){ans=[];other="";step=-1;render();window.scrollTo(0,0)};
+}
+var LEGAL=["mentions","cgv","confidentialite"];
+function route(){var h=location.hash.slice(1),on=LEGAL.indexOf(h)>-1;app.hidden=on;LEGAL.forEach(function(id){document.getElementById(id).hidden=(id!==h)});if(on)window.scrollTo(0,0)}
+window.addEventListener("hashchange",route);
+render();route();
+})();
+</script>
+</body>
+</html>
