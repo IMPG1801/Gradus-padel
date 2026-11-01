@@ -93,6 +93,10 @@ footer a{color:var(--on)}.legal a{color:var(--court)}
 .todo{background:color-mix(in srgb,var(--weak) 18%,var(--card));padding:1px 6px;border-radius:4px;font-weight:600;text-transform:uppercase;font-size:.85em}
 body::before{content:"";position:fixed;inset:0;z-index:-1;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-20 -20 440 840' fill='none' stroke='white' stroke-width='5'%3E%3Crect x='0' y='0' width='400' height='800'/%3E%3Cline x1='0' y1='400' x2='400' y2='400' stroke-width='10'/%3E%3Cline x1='0' y1='122' x2='400' y2='122'/%3E%3Cline x1='0' y1='678' x2='400' y2='678'/%3E%3Cline x1='200' y1='122' x2='200' y2='678'/%3E%3Ccircle cx='312' cy='520' r='15' fill='%23D6E43C' stroke='none'/%3E%3C/svg%3E") center/auto 100% no-repeat;opacity:var(--court-op);pointer-events:none}
 .brand{max-width:560px;margin:0 auto 18px;display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:700;font-size:1.5rem;letter-spacing:.02em;color:var(--on)}
+.lang{margin-left:auto;appearance:none;-webkit-appearance:none;background:none;border:1.5px solid var(--on2);color:var(--on);border-radius:99px;padding:4px 14px;font-family:var(--body);font-weight:600;font-size:.95rem;min-height:36px;text-align:center}
+.lang option{color:#0F2230}
+.ennote{font-size:.95rem;color:var(--muted)}
+html[lang="fr"] .ennote{display:none}
 .brand svg{width:34px;height:34px;flex:none}
 .hero{display:flex;flex-direction:column;gap:16px;padding:8px 0 4px}
 .hero h1{font-size:3.1rem;color:var(--on)}
@@ -104,11 +108,11 @@ body::before{content:"";position:fixed;inset:0;z-index:-1;background:url("data:i
 </style>
 </head>
 <body>
-<header class="brand"><svg viewBox="-100 -100 200 200" aria-hidden="true"><circle r="92" fill="#D6E43C"/><path d="M-66 -62 C-26 -34 -26 34 -66 62" fill="none" stroke="#0B2545" stroke-width="12" stroke-linecap="round"/><path d="M66 -62 C26 -34 26 34 66 62" fill="none" stroke="#0B2545" stroke-width="12" stroke-linecap="round"/></svg><span>Gradus Padel</span></header>
+<header class="brand"><svg viewBox="-100 -100 200 200" aria-hidden="true"><circle r="92" fill="#D6E43C"/><path d="M-66 -62 C-26 -34 -26 34 -66 62" fill="none" stroke="#0B2545" stroke-width="12" stroke-linecap="round"/><path d="M66 -62 C26 -34 26 34 66 62" fill="none" stroke="#0B2545" stroke-width="12" stroke-linecap="round"/></svg><span>Gradus Padel</span><select class="lang" id="lang" aria-label="Language"><option value="fr">FR</option><option value="en">EN</option><option value="es">ES</option><option value="it">IT</option><option value="sv">SV</option></select></header>
 <main id="app"></main>
 
 <section id="mentions" class="legal" hidden>
-<a href="#">← Retour au test</a>
+<a href="#" data-k="back">← Retour au test</a><p class="ennote" data-k="note"></p>
 <h1>Mentions légales</h1>
 <h2>Éditeur du site</h2>
 <p>Gradus Padel est édité par Grégory Éric PRAVE, entrepreneur individuel (micro-entrepreneur).</p>
@@ -131,7 +135,7 @@ body::before{content:"";position:fixed;inset:0;z-index:-1;background:url("data:i
 </section>
 
 <section id="cgv" class="legal" hidden>
-<a href="#">← Retour au test</a>
+<a href="#" data-k="back">← Retour au test</a><p class="ennote" data-k="note"></p>
 <h1>Conditions générales de vente</h1>
 <h2>Vendeur</h2>
 <p>Grégory Éric PRAVE, entrepreneur individuel, 43 bis chemin des Mûriers, 01600 Parcieux. SIRET : <span class="todo">à compléter</span>. Courriel : gradus.padel.contact@gmail.com.</p>
@@ -152,7 +156,7 @@ body::before{content:"";position:fixed;inset:0;z-index:-1;background:url("data:i
 </section>
 
 <section id="confidentialite" class="legal" hidden>
-<a href="#">← Retour au test</a>
+<a href="#" data-k="back">← Retour au test</a><p class="ennote" data-k="note"></p>
 <h1>Politique de confidentialité</h1>
 <h2>Responsable du traitement</h2>
 <p>Grégory Éric PRAVE, 43 bis chemin des Mûriers, 01600 Parcieux. Courriel : gradus.padel.contact@gmail.com.</p>
@@ -172,29 +176,180 @@ body::before{content:"";position:fixed;inset:0;z-index:-1;background:url("data:i
 <p>Tu peux demander l'accès, la rectification ou la suppression de tes données en écrivant à gradus.padel.contact@gmail.com. Tu peux aussi saisir la CNIL (cnil.fr).</p>
 </section>
 
-<footer><a href="#mentions">Mentions légales</a><a href="#cgv">CGV</a><a href="#confidentialite">Confidentialité</a></footer>
+<footer><a href="#mentions" data-k="fm">Mentions légales</a><a href="#cgv" data-k="fc">CGV</a><a href="#confidentialite" data-k="fp">Confidentialité</a></footer>
 
 
 <script>
 (function(){
-var Q=[
-{k:"ctx1",t:"Contexte",q:"Depuis combien de temps joues-tu au padel ?",o:["Moins de 6 mois","De 6 mois à 2 ans","Plus de 2 ans"]},
-{k:"ctx2",t:"Contexte",q:"Combien de fois joues-tu par semaine ?",o:["Moins d'une fois","Une fois","Deux fois ou plus"]},
-{k:"shot",t:"Contexte",q:"Quel coup te fait perdre le plus de points ?",o:["Bandeja","Víbora","Volée","Sortie de vitre","Service","Smash"]},
-{k:"avoid",t:"Contexte",q:"Quel coup évites-tu de jouer quand tu peux ?",o:["Bandeja","Víbora","Volée","Sortie de vitre","Service","Smash"]},
-{k:"pla",t:"Placement",q:"Quand vous attaquez, comment est ton placement par rapport à ton partenaire ?",o:["Souvent l'un derrière l'autre, en désordre","Parfois décalés","Côte à côte, à la même hauteur"]},
-{k:"pla",t:"Placement",q:"Après avoir renvoyé une balle depuis le fond du terrain (défense ou lob), que fais-tu ?",o:["Je regarde ma balle","Je me replace parfois","Je me replace tout de suite"]},
-{k:"com",t:"Communication",q:"Sur une balle au milieu, que se passe-t-il le plus souvent ?",o:["On se gêne ou on la laisse passer","L'un la prend sans rien dire","L'un annonce « à moi » avant"]},
-{k:"com",t:"Communication",q:"Après un point perdu, que vous dites-vous ?",o:["Rien, ou des reproches","On parle du point en général","On corrige une seule chose en une phrase"]},
-{k:"tec",t:"Technique",q:"Sur 10 volées, combien passent dans la zone que tu visais ?",o:["0 à 3","4 à 6","7 ou plus"]},
-{k:"tec",t:"Technique",q:"Sur 10 balles qui sortent de la vitre, combien renvoies-tu dans le terrain ?",o:["0 à 3","4 à 6","7 ou plus"]},
-{k:"fil",t:"Montée au filet",q:"Après ton service ou ton retour, montes-tu au filet ?",o:["Jamais","Rarement","Dès que possible"]},
-{k:"fil",t:"Montée au filet",q:"Quand vous prenez le filet, combien de temps le gardez-vous ?",o:["On le perd vite","On le garde un ou deux échanges, puis on recule","Jusqu'à la fin du point"]},
-{k:"con",t:"Contrôle",q:"Sur 10 coups joués dans un échange, combien finissent directement dans la vitre d'en face ou dans le filet ?",o:["4 ou plus","De 2 à 3","0 ou 1"]},
-{k:"con",t:"Contrôle",q:"Quand tu es en difficulté (balle rapide, mal placé), que fais-tu ?",o:["J'essaie de gagner le point d'un coup","Ça dépend","Je joue lent et profond pour revenir dans le point"]}
-];
-var NAMES={pla:"Placement",com:"Communication",tec:"Technique",fil:"Montée au filet",con:"Contrôle"};
-var EXO={"com": [["Le mot avant la balle", "pendant le match"], ["La règle du milieu fixée avant le match", "avant le match, 5 min"], ["Le lob qui oblige à reculer", "pendant le match"]], "pla": [["Les pieds sur la même ligne", "pendant le match"], ["Reprendre le filet ensemble après un lob", "pendant le match"]], "tec": [["Les volées dans la zone", "pendant le match"], ["Les sorties de vitre", "pendant le match"]], "fil": [["Monter après le service ou le retour", "pendant le match"], ["Garder le filet", "pendant le match"]], "con": [["Retenir sa balle", "pendant le match"], ["Le lob précis", "pendant le match"]]};
+var LANGS=["fr","en","es","it","sv"];
+var LS={get:function(k){try{return localStorage.getItem(k)}catch(e){return null}},set:function(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+var L=LS.get("gp-lang");
+if(LANGS.indexOf(L)<0){var nl=(navigator.language||"en").toLowerCase().slice(0,2);L=LANGS.indexOf(nl)>-1?nl:"en"}
+var MAIL="gradus.padel.contact@gmail.com";
+var S={
+title:{fr:"Gradus Padel : trouve ton point faible au padel",en:"Gradus Padel: find your weak spot in padel",es:"Gradus Padel: descubre tu punto débil en el pádel",it:"Gradus Padel: scopri il tuo punto debole nel padel",sv:"Gradus Padel: hitta din svaga punkt i padel"},
+eyebrow:{fr:"Diagnostic gratuit",en:"Free diagnostic",es:"Diagnóstico gratuito",it:"Diagnosi gratuita",sv:"Gratis diagnos"},
+h1:{fr:"Trouve ton point faible au padel.",en:"Find your weak spot in padel.",es:"Descubre tu punto débil en el pádel.",it:"Scopri il tuo punto debole nel padel.",sv:"Hitta din svaga punkt i padel."},
+lead:{fr:"14 questions, 3 minutes, gratuit. Tu reçois ton score sur 5 thèmes et le thème à travailler en priorité.",en:"14 questions, 3 minutes, free. You get your score on 5 themes and the theme to work on first.",es:"14 preguntas, 3 minutos, gratis. Recibes tu puntuación en 5 temas y el tema que debes trabajar primero.",it:"14 domande, 3 minuti, gratis. Ricevi il tuo punteggio su 5 temi e il tema da lavorare per primo.",sv:"14 frågor, 3 minuter, gratis. Du får din poäng i 5 teman och det tema du ska träna först."},
+start:{fr:"Commencer, c'est gratuit",en:"Start, it's free",es:"Empezar, es gratis",it:"Inizia, è gratis",sv:"Börja, det är gratis"},
+get:{fr:"Ce que tu obtiens",en:"What you get",es:"Lo que obtienes",it:"Cosa ottieni",sv:"Det här får du"},
+free:{fr:"Gratuit.",en:"Free.",es:"Gratis.",it:"Gratis.",sv:"Gratis."},
+gain1:{fr:"Ton score sur 6 pour le placement, la communication, la technique, la montée au filet et le contrôle.",en:"Your score out of 6 for positioning, communication, technique, net play and ball control.",es:"Tu puntuación sobre 6 en posicionamiento, comunicación, técnica, juego en la red y control de la bola.",it:"Il tuo punteggio su 6 per posizionamento, comunicazione, tecnica, gioco a rete e controllo della palla.",sv:"Din poäng av 6 för positionering, kommunikation, teknik, nätspel och bollkontroll."},
+gain2:{fr:"Ta priorité numéro un et ton deuxième thème.",en:"Your number one priority and your second theme.",es:"Tu prioridad número uno y tu segundo tema.",it:"La tua priorità numero uno e il tuo secondo tema.",sv:"Din förstaprioritet och ditt andra tema."},
+paid:{fr:"19,99 €, une seule fois.",en:"€19.99, one time only.",es:"19,99 €, un solo pago.",it:"19,99 €, una volta sola.",sv:"19,99 €, en enda gång."},
+gain3:{fr:"Des exercices pour ces deux thèmes, à jouer pendant un vrai match, jamais en phase arrêtée.",en:"Exercises for these two themes, played during a real match, never as stopped drills.",es:"Ejercicios para estos dos temas, para jugar durante un partido real, nunca en ejercicios parados.",it:"Esercizi per questi due temi, da giocare durante una vera partita, mai in fase di gioco fermo.",sv:"Övningar för de här två temana, att spela under en riktig match, aldrig som stillastående övningar."},
+nosub:{fr:"Sans abonnement. Satisfait ou remboursé pendant 14 jours.",en:"No subscription. 14-day money-back guarantee.",es:"Sin suscripción. Satisfecho o reembolsado durante 14 días.",it:"Nessun abbonamento. Soddisfatti o rimborsati per 14 giorni.",sv:"Ingen prenumeration. Nöjd eller pengarna tillbaka i 14 dagar."},
+ctx:{fr:"Contexte",en:"Background",es:"Contexto",it:"Contesto",sv:"Bakgrund"},
+prev:{fr:"← Question précédente",en:"← Previous question",es:"← Pregunta anterior",it:"← Domanda precedente",sv:"← Föregående fråga"},
+last:{fr:"Dernière étape",en:"Last step",es:"Último paso",it:"Ultimo passaggio",sv:"Sista steget"},
+opt:{fr:"Facultatif",en:"Optional",es:"Opcional",it:"Facoltativo",sv:"Valfritt"},
+oh:{fr:"Autre point faible ?",en:"Another weak spot?",es:"¿Otro punto débil?",it:"Un altro punto debole?",sv:"Någon annan svag punkt?"},
+op:{fr:"Y a-t-il autre chose que tu veux travailler ? Écris-le avec tes mots.",en:"Is there anything else you want to work on? Write it in your own words.",es:"¿Hay algo más que quieras trabajar? Escríbelo con tus palabras.",it:"C'è qualcos'altro che vuoi migliorare? Scrivilo con parole tue.",sv:"Finns det något annat du vill träna på? Skriv med egna ord."},
+oph:{fr:"Par exemple : mon service, ma condition physique…",en:"For example: my serve, my fitness…",es:"Por ejemplo: mi saque, mi condición física…",it:"Ad esempio: il mio servizio, la mia forma fisica…",sv:"Till exempel: min serve, min kondition…"},
+see:{fr:"Voir mon résultat",en:"See my result",es:"Ver mi resultado",it:"Vedi il mio risultato",sv:"Se mitt resultat"},
+exer:{fr:"Exercices : ",en:"Exercises: ",es:"Ejercicios: ",it:"Esercizi: ",sv:"Övningar: "},
+locked:{fr:"Verrouillé",en:"Locked",es:"Bloqueado",it:"Bloccato",sv:"Låst"},
+unbtn:{fr:"Débloquer mes {n} exercices pour 19,99 €",en:"Unlock my {n} exercises for €19.99",es:"Desbloquear mis {n} ejercicios por 19,99 €",it:"Sblocca i miei {n} esercizi per 19,99 €",sv:"Lås upp mina {n} övningar för 19,99 €"},
+soon:{fr:"Bientôt disponible : 19,99 €, une seule fois",en:"Coming soon: €19.99, one time only",es:"Próximamente: 19,99 €, un solo pago",it:"Presto disponibile: 19,99 €, una volta sola",sv:"Kommer snart: 19,99 €, en enda gång"},
+full:{fr:"Exercices complets",en:"Full exercises",es:"Ejercicios completos",it:"Esercizi completi",sv:"Kompletta övningar"},
+unh:{fr:"Débloque tes {n} exercices",en:"Unlock your {n} exercises",es:"Desbloquea tus {n} ejercicios",it:"Sblocca i tuoi {n} esercizi",sv:"Lås upp dina {n} övningar"},
+unp:{fr:"Tu vois les titres de tes exercices pour {a} et {b}. Le détail de chaque exercice, avec son objectif chiffré, t'est envoyé par courriel après le paiement, en général sous 24 h. Tous se jouent pendant un vrai match.",en:"You can see the titles of your exercises for {a} and {b}. The full detail of each exercise, with its numeric goal, is sent to you by email after payment, usually within 24 hours. All are played during a real match.",es:"Ves los títulos de tus ejercicios de {a} y {b}. El detalle de cada ejercicio, con su objetivo en cifras, se te envía por correo electrónico tras el pago, normalmente en 24 h. Todos se juegan durante un partido real.",it:"Vedi i titoli dei tuoi esercizi per {a} e {b}. Il dettaglio di ogni esercizio, con il suo obiettivo numerico, ti viene inviato via email dopo il pagamento, di solito entro 24 ore. Tutti si giocano durante una vera partita.",sv:"Du ser titlarna på dina övningar för {a} och {b}. Detaljerna för varje övning, med ett siffersatt mål, skickas till dig med e-post efter betalningen, vanligtvis inom 24 timmar. Alla spelas under en riktig match."},
+amt:{fr:"19,99 €",en:"€19.99",es:"19,99 €",it:"19,99 €",sv:"19,99 €"},
+once:{fr:"paiement unique, sans abonnement",en:"one-time payment, no subscription",es:"pago único, sin suscripción",it:"pagamento unico, senza abbonamento",sv:"engångsbetalning, ingen prenumeration"},
+notopen:{fr:"Le paiement n'est pas encore ouvert.",en:"Payment is not open yet.",es:"El pago aún no está abierto.",it:"Il pagamento non è ancora aperto.",sv:"Betalningen är inte öppen än."},
+guar:{fr:"Satisfait ou remboursé 14 jours.",en:"14-day money-back guarantee.",es:"Satisfecho o reembolsado 14 días.",it:"Soddisfatti o rimborsati 14 giorni.",sv:"Nöjd eller pengarna tillbaka i 14 dagar."},
+guarp:{fr:"Écris à "+MAIL+" : tu es remboursé sous 5 jours ouvrés, sans justification.",en:"Write to "+MAIL+": you are refunded within 5 business days, no questions asked.",es:"Escribe a "+MAIL+": te reembolsamos en 5 días laborables, sin justificación.",it:"Scrivi a "+MAIL+": vieni rimborsato entro 5 giorni lavorativi, senza giustificazione.",sv:"Skriv till "+MAIL+": du får pengarna tillbaka inom 5 arbetsdagar, utan motivering."},
+res:{fr:"Ton résultat",en:"Your result",es:"Tu resultado",it:"Il tuo risultato",sv:"Ditt resultat"},
+pri1:{fr:"Priorité numéro un",en:"Priority number one",es:"Prioridad número uno",it:"Priorità numero uno",sv:"Förstaprioritet"},
+sec:{fr:"Deuxième thème",en:"Second theme",es:"Segundo tema",it:"Secondo tema",sv:"Andra temat"},
+scores:{fr:"Tes scores",en:"Your scores",es:"Tus puntuaciones",it:"I tuoi punteggi",sv:"Dina poäng"},
+tw:{fr:"À travailler",en:"To work on",es:"A trabajar",it:"Da migliorare",sv:"Att träna"},
+ts:{fr:"Solide",en:"Solid",es:"Sólido",it:"Solido",sv:"Stark"},
+tk:{fr:"Correct",en:"OK",es:"Correcto",it:"Discreto",sv:"Okej"},
+prof:{fr:"Ton profil",en:"Your profile",es:"Tu perfil",it:"Il tuo profilo",sv:"Din profil"},
+lvl:{fr:"Niveau",en:"Level",es:"Nivel",it:"Livello",sv:"Nivå"},
+frq:{fr:"Rythme",en:"Frequency",es:"Ritmo",it:"Frequenza",sv:"Frekvens"},
+shc:{fr:"Coup qui coûte des points",en:"Shot that costs points",es:"Golpe que te cuesta puntos",it:"Colpo che ti costa punti",sv:"Slag som kostar poäng"},
+sha:{fr:"Coup que tu évites",en:"Shot you avoid",es:"Golpe que evitas",it:"Colpo che eviti",sv:"Slag du undviker"},
+oth:{fr:"Autre point faible",en:"Other weak spot",es:"Otro punto débil",it:"Altro punto debole",sv:"Annan svag punkt"},
+copy:{fr:"Copier mon résultat",en:"Copy my result",es:"Copiar mi resultado",it:"Copia il mio risultato",sv:"Kopiera mitt resultat"},
+again:{fr:"Refaire le test",en:"Retake the test",es:"Repetir el test",it:"Rifai il test",sv:"Gör testet igen"},
+copied:{fr:"Résultat copié. Tu peux le coller dans un message.",en:"Result copied. You can paste it into a message.",es:"Resultado copiado. Puedes pegarlo en un mensaje.",it:"Risultato copiato. Puoi incollarlo in un messaggio.",sv:"Resultatet kopierat. Du kan klistra in det i ett meddelande."},
+head:{fr:"Diagnostic padel",en:"Padel diagnostic",es:"Diagnóstico de pádel",it:"Diagnosi padel",sv:"Padeldiagnos"},
+then:{fr:"puis",en:"then",es:"luego",it:"poi",sv:"sedan"},
+f0:{fr:"Moins d'une fois par semaine",en:"Less than once a week",es:"Menos de una vez por semana",it:"Meno di una volta a settimana",sv:"Mindre än en gång i veckan"},
+f1:{fr:"Une fois par semaine",en:"Once a week",es:"Una vez por semana",it:"Una volta a settimana",sv:"En gång i veckan"},
+f2:{fr:"Deux fois ou plus par semaine",en:"Twice or more a week",es:"Dos veces o más por semana",it:"Due volte o più a settimana",sv:"Två gånger eller mer i veckan"},
+back:{fr:"← Retour au test",en:"← Back to the test",es:"← Volver al test",it:"← Torna al test",sv:"← Tillbaka till testet"},
+fm:{fr:"Mentions légales",en:"Legal notice (FR)",es:"Aviso legal (FR)",it:"Note legali (FR)",sv:"Juridisk information (FR)"},
+fc:{fr:"CGV",en:"Terms of sale (FR)",es:"Condiciones de venta (FR)",it:"Condizioni di vendita (FR)",sv:"Försäljningsvillkor (FR)"},
+fp:{fr:"Confidentialité",en:"Privacy (FR)",es:"Privacidad (FR)",it:"Privacy (FR)",sv:"Integritet (FR)"},
+note:{fr:"",en:"This page is in French: French law applies to your purchase. Questions? Write to "+MAIL+".",es:"Esta página está en francés: a tu compra se aplica la ley francesa. ¿Dudas? Escribe a "+MAIL+".",it:"Questa pagina è in francese: al tuo acquisto si applica la legge francese. Domande? Scrivi a "+MAIL+".",sv:"Den här sidan är på franska: fransk lag gäller för ditt köp. Frågor? Skriv till "+MAIL+"."},
+dur0:{fr:"pendant le match",en:"during the match",es:"durante el partido",it:"durante la partita",sv:"under matchen"},
+dur1:{fr:"avant le match, 5 min",en:"before the match, 5 min",es:"antes del partido, 5 min",it:"prima della partita, 5 min",sv:"före matchen, 5 min"}
+};
+function t(k,v){var s=(S[k][L]!==undefined?S[k][L]:S[k].en);if(v)for(var x in v)s=s.split("{"+x+"}").join(v[x]);return s}
+var NAMES={
+fr:{pla:"Placement",com:"Communication",tec:"Technique",fil:"Montée au filet",con:"Contrôle"},
+en:{pla:"Positioning",com:"Communication",tec:"Technique",fil:"Net play",con:"Ball control"},
+es:{pla:"Posicionamiento",com:"Comunicación",tec:"Técnica",fil:"Juego en la red",con:"Control de la bola"},
+it:{pla:"Posizionamento",com:"Comunicazione",tec:"Tecnica",fil:"Gioco a rete",con:"Controllo della palla"},
+sv:{pla:"Positionering",com:"Kommunikation",tec:"Teknik",fil:"Nätspel",con:"Bollkontroll"}};
+var SHOTS={
+fr:["Bandeja","Víbora","Volée","Sortie de vitre","Service","Smash"],
+en:["Bandeja","Víbora","Volley","Wall exit","Serve","Smash"],
+es:["Bandeja","Víbora","Volea","Salida de cristal","Saque","Remate"],
+it:["Bandeja","Víbora","Volée","Uscita dal vetro","Servizio","Smash"],
+sv:["Bandeja","Víbora","Volley","Utgång från glaset","Serve","Smash"]};
+/* [clé, question, réponses du pire au meilleur] */
+var QD={
+fr:[
+["ctx1","Depuis combien de temps joues-tu au padel ?",["Moins de 6 mois","De 6 mois à 2 ans","Plus de 2 ans"]],
+["ctx2","Combien de fois joues-tu par semaine ?",["Moins d'une fois","Une fois","Deux fois ou plus"]],
+["shot","Quel coup te fait perdre le plus de points ?",0],
+["avoid","Quel coup évites-tu de jouer quand tu peux ?",0],
+["pla","Quand vous attaquez, comment est ton placement par rapport à ton partenaire ?",["Souvent l'un derrière l'autre, en désordre","Parfois décalés","Côte à côte, à la même hauteur"]],
+["pla","Après avoir renvoyé une balle depuis le fond du terrain (défense ou lob), que fais-tu ?",["Je regarde ma balle","Je me replace parfois","Je me replace tout de suite"]],
+["com","Sur une balle au milieu, que se passe-t-il le plus souvent ?",["On se gêne ou on la laisse passer","L'un la prend sans rien dire","L'un annonce « à moi » avant"]],
+["com","Après un point perdu, que vous dites-vous ?",["Rien, ou des reproches","On parle du point en général","On corrige une seule chose en une phrase"]],
+["tec","Sur 10 volées, combien passent dans la zone que tu visais ?",["0 à 3","4 à 6","7 ou plus"]],
+["tec","Sur 10 balles qui sortent de la vitre, combien renvoies-tu dans le terrain ?",["0 à 3","4 à 6","7 ou plus"]],
+["fil","Après ton service ou ton retour, montes-tu au filet ?",["Jamais","Rarement","Dès que possible"]],
+["fil","Quand vous prenez le filet, combien de temps le gardez-vous ?",["On le perd vite","On le garde un ou deux échanges, puis on recule","Jusqu'à la fin du point"]],
+["con","Sur 10 coups joués dans un échange, combien finissent directement dans la vitre d'en face ou dans le filet ?",["4 ou plus","De 2 à 3","0 ou 1"]],
+["con","Quand tu es en difficulté (balle rapide, mal placé), que fais-tu ?",["J'essaie de gagner le point d'un coup","Ça dépend","Je joue lent et profond pour revenir dans le point"]]],
+en:[
+["ctx1","How long have you been playing padel?",["Less than 6 months","6 months to 2 years","More than 2 years"]],
+["ctx2","How often do you play per week?",["Less than once","Once","Twice or more"]],
+["shot","Which shot costs you the most points?",0],
+["avoid","Which shot do you avoid playing when you can?",0],
+["pla","When you attack, how is your positioning compared to your partner?",["Often one behind the other, out of sync","Sometimes staggered","Side by side, at the same depth"]],
+["pla","After returning a ball from the back of the court (defence or lob), what do you do?",["I watch my ball","I sometimes reposition","I reposition right away"]],
+["com","On a ball down the middle, what happens most often?",["We get in each other's way or let it go","One of us takes it without a word","One of us calls “mine” first"]],
+["com","After losing a point, what do you say to each other?",["Nothing, or blame","We talk about the point in general","We fix one single thing in one sentence"]],
+["tec","Out of 10 volleys, how many land in the zone you aimed for?",["0 to 3","4 to 6","7 or more"]],
+["tec","Out of 10 balls coming off the wall, how many do you return into the court?",["0 to 3","4 to 6","7 or more"]],
+["fil","After your serve or return, do you move up to the net?",["Never","Rarely","As soon as possible"]],
+["fil","Once you take the net, how long do you keep it?",["We lose it quickly","We keep it for one or two shots, then fall back","Until the end of the point"]],
+["con","Out of 10 shots in a rally, how many end directly in the opposite wall or in the net?",["4 or more","2 to 3","0 or 1"]],
+["con","When you are in trouble (fast ball, out of position), what do you do?",["I try to win the point in one shot","It depends","I play slow and deep to get back into the point"]]],
+es:[
+["ctx1","¿Desde hace cuánto juegas al pádel?",["Menos de 6 meses","De 6 meses a 2 años","Más de 2 años"]],
+["ctx2","¿Cuántas veces juegas por semana?",["Menos de una vez","Una vez","Dos veces o más"]],
+["shot","¿Qué golpe te hace perder más puntos?",0],
+["avoid","¿Qué golpe evitas jugar cuando puedes?",0],
+["pla","Cuando atacáis, ¿cómo es tu posicionamiento respecto a tu compañero?",["A menudo uno detrás del otro, desordenados","A veces desfasados","Uno al lado del otro, a la misma altura"]],
+["pla","Después de devolver una bola desde el fondo de la pista (defensa o globo), ¿qué haces?",["Miro mi bola","A veces me recoloco","Me recoloco enseguida"]],
+["com","En una bola al centro, ¿qué pasa con más frecuencia?",["Nos estorbamos o la dejamos pasar","Uno la coge sin decir nada","Uno avisa « mía » antes"]],
+["com","Después de perder un punto, ¿qué os decís?",["Nada, o reproches","Hablamos del punto en general","Corregimos una sola cosa en una frase"]],
+["tec","De 10 voleas, ¿cuántas caen en la zona a la que apuntabas?",["0 a 3","4 a 6","7 o más"]],
+["tec","De 10 bolas que salen del cristal, ¿cuántas devuelves a la pista?",["0 a 3","4 a 6","7 o más"]],
+["fil","Después de tu saque o tu resto, ¿subes a la red?",["Nunca","Rara vez","En cuanto puedo"]],
+["fil","Cuando tomáis la red, ¿cuánto tiempo la mantenéis?",["La perdemos enseguida","La mantenemos uno o dos golpes y luego retrocedemos","Hasta el final del punto"]],
+["con","De 10 golpes en un intercambio, ¿cuántos acaban directamente en el cristal de enfrente o en la red?",["4 o más","De 2 a 3","0 o 1"]],
+["con","Cuando estás en apuros (bola rápida, mal colocado), ¿qué haces?",["Intento ganar el punto de un golpe","Depende","Juego lento y profundo para volver al punto"]]],
+it:[
+["ctx1","Da quanto tempo giochi a padel?",["Meno di 6 mesi","Da 6 mesi a 2 anni","Più di 2 anni"]],
+["ctx2","Quante volte giochi a settimana?",["Meno di una volta","Una volta","Due volte o più"]],
+["shot","Quale colpo ti fa perdere più punti?",0],
+["avoid","Quale colpo eviti di giocare quando puoi?",0],
+["pla","Quando attaccate, com'è il tuo posizionamento rispetto al compagno?",["Spesso uno dietro l'altro, in disordine","A volte sfalsati","Fianco a fianco, alla stessa altezza"]],
+["pla","Dopo aver rinviato una palla dal fondo campo (difesa o lob), cosa fai?",["Guardo la mia palla","A volte mi riposiziono","Mi riposiziono subito"]],
+["com","Su una palla al centro, cosa succede più spesso?",["Ci intralciamo o la lasciamo passare","Uno la prende senza dire nulla","Uno dice « mia » prima"]],
+["com","Dopo un punto perso, cosa vi dite?",["Niente, o rimproveri","Parliamo del punto in generale","Correggiamo una sola cosa in una frase"]],
+["tec","Su 10 volée, quante cadono nella zona che volevi colpire?",["Da 0 a 3","Da 4 a 6","7 o più"]],
+["tec","Su 10 palle che escono dal vetro, quante rimandi in campo?",["Da 0 a 3","Da 4 a 6","7 o più"]],
+["fil","Dopo il tuo servizio o la tua risposta, sali a rete?",["Mai","Raramente","Appena possibile"]],
+["fil","Quando prendete la rete, per quanto tempo la mantenete?",["La perdiamo subito","La teniamo uno o due scambi, poi arretriamo","Fino alla fine del punto"]],
+["con","Su 10 colpi in uno scambio, quanti finiscono direttamente nel vetro di fronte o in rete?",["4 o più","Da 2 a 3","0 o 1"]],
+["con","Quando sei in difficoltà (palla veloce, mal posizionato), cosa fai?",["Cerco di vincere il punto con un colpo solo","Dipende","Gioco lento e profondo per rientrare nel punto"]]],
+sv:[
+["ctx1","Hur länge har du spelat padel?",["Mindre än 6 månader","6 månader till 2 år","Mer än 2 år"]],
+["ctx2","Hur många gånger i veckan spelar du?",["Mindre än en gång","En gång","Två gånger eller mer"]],
+["shot","Vilket slag kostar dig flest poäng?",0],
+["avoid","Vilket slag undviker du att spela när du kan?",0],
+["pla","När ni anfaller, hur är din positionering i förhållande till din partner?",["Ofta en bakom den andra, i oordning","Ibland förskjutna","Sida vid sida, på samma höjd"]],
+["pla","Efter att ha returnerat en boll från baksidan av banan (försvar eller lobb), vad gör du?",["Jag tittar på min boll","Jag omplacerar mig ibland","Jag omplacerar mig direkt"]],
+["com","På en boll i mitten, vad händer oftast?",["Vi stör varandra eller släpper den","En av oss tar den utan ett ord","En av oss ropar ”min” först"]],
+["com","Efter en förlorad poäng, vad säger ni till varandra?",["Ingenting, eller anklagelser","Vi pratar om poängen i allmänhet","Vi rättar en enda sak med en mening"]],
+["tec","Av 10 volleyer, hur många landar i zonen du siktade på?",["0 till 3","4 till 6","7 eller fler"]],
+["tec","Av 10 bollar som kommer ut från glaset, hur många slår du tillbaka in i banan?",["0 till 3","4 till 6","7 eller fler"]],
+["fil","Efter din serve eller retur, går du upp till nätet?",["Aldrig","Sällan","Så fort som möjligt"]],
+["fil","När ni tar nätet, hur länge behåller ni det?",["Vi förlorar det snabbt","Vi behåller det ett eller två slag, sedan backar vi","Till slutet av poängen"]],
+["con","Av 10 slag i en rally, hur många hamnar direkt i glaset mittemot eller i nätet?",["4 eller fler","2 till 3","0 eller 1"]],
+["con","När du är i trubbel (snabb boll, dåligt placerad), vad gör du?",["Jag försöker vinna poängen med ett slag","Det beror på","Jag spelar långsamt och djupt för att komma tillbaka in i poängen"]]]
+};
+var EXT={
+fr:{com:["Le mot avant la balle","La règle du milieu fixée avant le match","Le lob qui oblige à reculer"],pla:["Les pieds sur la même ligne","Reprendre le filet ensemble après un lob"],tec:["Les volées dans la zone","Les sorties de vitre"],fil:["Monter après le service ou le retour","Garder le filet"],con:["Retenir sa balle","Le lob précis"]},
+en:{com:["The call before the ball","The middle rule set before the match","The lob that pushes you back"],pla:["Feet on the same line","Retaking the net together after a lob"],tec:["Volleys into the zone","Wall exits"],fil:["Moving up after the serve or return","Holding the net"],con:["Holding your ball back","The precise lob"]},
+es:{com:["La palabra antes de la bola","La regla del centro fijada antes del partido","El globo que te obliga a retroceder"],pla:["Los pies en la misma línea","Recuperar la red juntos tras un globo"],tec:["Voleas en la zona","Las salidas de cristal"],fil:["Subir después del saque o del resto","Mantener la red"],con:["Retener tu bola","El globo preciso"]},
+it:{com:["La parola prima della palla","La regola del centro fissata prima della partita","Il lob che ti costringe ad arretrare"],pla:["I piedi sulla stessa linea","Riprendere la rete insieme dopo un lob"],tec:["Le volée nella zona","Le uscite dal vetro"],fil:["Salire dopo il servizio o la risposta","Mantenere la rete"],con:["Trattenere la propria palla","Il lob preciso"]},
+sv:{com:["Ordet före bollen","Mittenregeln bestämd före matchen","Lobben som tvingar dig bakåt"],pla:["Fötterna på samma linje","Ta nätet tillsammans efter en lobb"],tec:["Volleyer i zonen","Glasutgångar"],fil:["Gå upp efter serven eller returen","Behålla nätet"],con:["Hålla tillbaka sin boll","Den precisa lobben"]}
+};
+var DUR={com:[0,1,0],pla:[0,0],tec:[0,0],fil:[0,0],con:[0,0]};
+function Q(){return QD[L].map(function(r){
+  var k=r[0],isCtx=(k==="ctx1"||k==="ctx2"||k==="shot"||k==="avoid");
+  return {k:k,t:isCtx?t("ctx"):NAMES[L][k],q:r[1],o:r[2]||SHOTS[L]}})}
 var ORDER=["con","pla","com","tec","fil"]; /* ordre de départage en cas d'égalité */
 var ans=[],step=-1,other="";
 var app=document.getElementById("app");
@@ -203,27 +358,27 @@ function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;
 
 function intro(){
   app.innerHTML="";
-  app.appendChild(el('<div class="hero"><span class="eyebrow">Diagnostic gratuit</span><h1>Trouve ton point faible au padel.</h1>'+
-  '<p>14 questions, 3 minutes, gratuit. Tu reçois ton score sur 5 thèmes et le thème à travailler en priorité.</p>'+
-  '<button class="primary ball" id="go">Commencer, c\'est gratuit</button></div>'));
-  app.appendChild(el('<div class="card"><h2>Ce que tu obtiens</h2><ul class="gains">'+
-  '<li><b>Gratuit.</b> Ton score sur 6 pour le placement, la communication, la technique, la montée au filet et le contrôle.</li>'+
-  '<li><b>Gratuit.</b> Ta priorité numéro un et ton deuxième thème.</li>'+
-  '<li><b>19,99 €, une seule fois.</b> Des exercices pour ces deux thèmes, à jouer pendant un vrai match, jamais en phase arrêtée.</li></ul>'+
-  '<p class="muted">Sans abonnement. Satisfait ou remboursé pendant 14 jours.</p></div>'));
+  app.appendChild(el('<div class="hero"><span class="eyebrow">'+t("eyebrow")+'</span><h1>'+t("h1")+'</h1>'+
+  '<p>'+t("lead")+'</p><button class="primary ball" id="go">'+t("start")+'</button></div>'));
+  app.appendChild(el('<div class="card"><h2>'+t("get")+'</h2><ul class="gains">'+
+  '<li><b>'+t("free")+'</b> '+t("gain1")+'</li>'+
+  '<li><b>'+t("free")+'</b> '+t("gain2")+'</li>'+
+  '<li><b>'+t("paid")+'</b> '+t("gain3")+'</li></ul>'+
+  '<p class="muted">'+t("nosub")+'</p></div>'));
   document.getElementById("go").onclick=function(){step=0;render();window.scrollTo(0,0)};
 }
 function render(){
+  var QQ=Q();
   if(step<0)return intro();
-  if(step===Q.length)return otherStep();
-  if(step>Q.length)return result();
-  var q=Q[step];
+  if(step===QQ.length)return otherStep();
+  if(step>QQ.length)return result();
+  var q=QQ[step];
   app.innerHTML="";
-  var pct=Math.round(step/Q.length*100);
-  var h='<div class="progress"><div class="bar"><i style="width:'+pct+'%"></i></div><span class="count">'+(step+1)+' / '+Q.length+'</span></div>'+
+  var pct=Math.round(step/QQ.length*100);
+  var h='<div class="progress"><div class="bar"><i style="width:'+pct+'%"></i></div><span class="count">'+(step+1)+' / '+QQ.length+'</span></div>'+
   '<div class="card"><span class="theme">'+esc(q.t)+'</span><h2>'+esc(q.q)+'</h2><div class="opts">'+
   q.o.map(function(o,i){return '<button class="opt'+(ans[step]===i?' sel':'')+'" data-i="'+i+'">'+esc(o)+'</button>'}).join("")+
-  '</div></div>'+(step>0?'<button class="ghost" id="back">← Question précédente</button>':'');
+  '</div></div>'+(step>0?'<button class="ghost" id="back">'+t("prev")+'</button>':'');
   app.innerHTML=h;
   Array.prototype.forEach.call(app.querySelectorAll(".opt"),function(b){
     b.onclick=function(){ans[step]=+b.getAttribute("data-i");b.classList.add("sel");setTimeout(function(){step++;render();window.scrollTo(0,0)},160)}
@@ -231,74 +386,82 @@ function render(){
   var bk=document.getElementById("back");if(bk)bk.onclick=function(){step--;render()};
 }
 function otherStep(){
-  app.innerHTML='<div class="progress"><div class="bar"><i style="width:100%"></i></div><span class="count">Dernière étape</span></div>'+
-  '<div class="card"><span class="theme">Facultatif</span><h2>Autre point faible ?</h2>'+
-  '<p class="muted">Y a-t-il autre chose que tu veux travailler ? Écris-le avec tes mots.</p>'+
-  '<textarea id="oth" placeholder="Par exemple : mon service, ma condition physique…">'+esc(other)+'</textarea>'+
-  '<button class="primary" id="fin">Voir mon résultat</button></div>'+
-  '<button class="ghost" id="back">← Question précédente</button>';
-  document.getElementById("fin").onclick=function(){other=document.getElementById("oth").value.trim();step=Q.length+1;render();window.scrollTo(0,0)};
-  document.getElementById("back").onclick=function(){other=document.getElementById("oth").value;step=Q.length-1;render()};
+  app.innerHTML='<div class="progress"><div class="bar"><i style="width:100%"></i></div><span class="count">'+t("last")+'</span></div>'+
+  '<div class="card"><span class="theme">'+t("opt")+'</span><h2>'+t("oh")+'</h2>'+
+  '<p class="muted">'+t("op")+'</p>'+
+  '<textarea id="oth" placeholder="'+esc(t("oph"))+'">'+esc(other)+'</textarea>'+
+  '<button class="primary" id="fin">'+t("see")+'</button></div>'+
+  '<button class="ghost" id="back">'+t("prev")+'</button>';
+  document.getElementById("fin").onclick=function(){other=document.getElementById("oth").value.trim();step=Q().length+1;render();window.scrollTo(0,0)};
+  document.getElementById("back").onclick=function(){other=document.getElementById("oth").value;step=Q().length-1;render()};
 }
 function scores(){
   var s={pla:0,com:0,tec:0,fil:0,con:0};
-  Q.forEach(function(q,i){if(s.hasOwnProperty(q.k))s[q.k]+=ans[i]+1});
+  Q().forEach(function(q,i){if(s.hasOwnProperty(q.k))s[q.k]+=ans[i]+1});
   return s;
 }
 function exCard(k,lab){
-  var h='<div class="card"><span class="theme">'+lab+'</span><h2>Exercices : '+NAMES[k]+'</h2>';
-  EXO[k].forEach(function(e,i){h+='<div class="ex"><div class="exh"><b>'+(i+1)+'. '+esc(e[0])+'</b><span class="exd">'+esc(e[1])+' · <span class="lk">Verrouillé</span></span></div><div class="sk" aria-hidden="true"><i></i><i></i><i style="width:60%"></i></div></div>'});
+  var h='<div class="card"><span class="theme">'+lab+'</span><h2>'+t("exer")+NAMES[L][k]+'</h2>';
+  EXT[L][k].forEach(function(title,i){h+='<div class="ex"><div class="exh"><b>'+(i+1)+'. '+esc(title)+'</b><span class="exd">'+esc(t("dur"+DUR[k][i]))+' · <span class="lk">'+t("locked")+'</span></span></div><div class="sk" aria-hidden="true"><i></i><i></i><i style="width:60%"></i></div></div>'});
   return h+'</div>';
 }
 var PAY=""; /* lien de paiement Stripe en mode réel, à remplir quand le SIRET est reçu */
 function unlock(a,b,sc,shot,avoid){
-  var n=EXO[a].length+EXO[b].length;
-  var ref="pri-"+a+"_sec-"+b+"_"+ORDER.map(function(k){return k+sc[k]}).join("-")+"_sh"+shot+"-av"+avoid;
-  var btn=PAY?'<a class="primary btn" href="'+PAY+'?client_reference_id='+ref+'">Débloquer mes '+n+' exercices pour 19,99 €</a>':'<button class="primary" disabled>Bientôt disponible : 19,99 €, une seule fois</button>';
-  return '<div class="card"><span class="theme">Exercices complets</span><h2>Débloque tes '+n+' exercices</h2>'+
-  '<p>Tu vois les titres de tes exercices pour '+NAMES[a]+' et '+NAMES[b]+'. Le détail de chaque exercice, avec son objectif chiffré, t\'est envoyé par courriel après le paiement, en général sous 24 h. Tous se jouent pendant un vrai match.</p>'+
-  '<div class="price"><span class="amt">19,99 €</span><span class="muted">paiement unique, sans abonnement</span></div>'+btn+
-  (PAY?'':'<p class="muted">Le paiement n\'est pas encore ouvert.</p>')+
-  '<p class="muted"><b>Satisfait ou remboursé 14 jours.</b> Écris à gradus.padel.contact@gmail.com : tu es remboursé sous 5 jours ouvrés, sans justification.</p></div>';
+  var n=EXT.fr[a].length+EXT.fr[b].length,N=NAMES[L];
+  var ref="pri-"+a+"_sec-"+b+"_"+ORDER.map(function(k){return k+sc[k]}).join("-")+"_sh"+shot+"-av"+avoid+"_"+L;
+  var btn=PAY?'<a class="primary btn" href="'+PAY+'?client_reference_id='+ref+'">'+t("unbtn",{n:n})+'</a>':'<button class="primary" disabled>'+t("soon")+'</button>';
+  return '<div class="card"><span class="theme">'+t("full")+'</span><h2>'+t("unh",{n:n})+'</h2>'+
+  '<p>'+t("unp",{a:N[a],b:N[b]})+'</p>'+
+  '<div class="price"><span class="amt">'+t("amt")+'</span><span class="muted">'+t("once")+'</span></div>'+btn+
+  (PAY?'':'<p class="muted">'+t("notopen")+'</p>')+
+  '<p class="muted"><b>'+t("guar")+'</b> '+t("guarp")+'</p></div>';
 }
 function result(){
-  var s=scores();
+  var s=scores(),N=NAMES[L],QQ=Q(),C=(L==="fr"?" : ":": ");
   var ranked=ORDER.slice().sort(function(a,b){return s[a]-s[b]||ORDER.indexOf(a)-ORDER.indexOf(b)});
   var first=ranked[0],second=ranked[1];
-  var i7=Q.findIndex(function(q){return q.k==="shot"});
-  var shot=Q[i7].o[ans[i7]],i7s=ans[i7];
-  var i8=Q.findIndex(function(q){return q.k==="avoid"});
-  var avoid=Q[i8].o[ans[i8]],i8s=ans[i8];
-  var lvl=["Moins de 6 mois","De 6 mois à 2 ans","Plus de 2 ans"][ans[0]];
-  var freq=["Moins d'une fois par semaine","Une fois par semaine","Deux fois ou plus par semaine"][ans[1]];
+  var i7=QQ.findIndex(function(q){return q.k==="shot"});
+  var shot=QQ[i7].o[ans[i7]],i7s=ans[i7];
+  var i8=QQ.findIndex(function(q){return q.k==="avoid"});
+  var avoid=QQ[i8].o[ans[i8]],i8s=ans[i8];
+  var lvl=QQ[0].o[ans[0]];
+  var freq=t("f"+ans[1]);
   var rows=ORDER.map(function(k){
     var v=s[k],cls=v<=3?"weak":(v===6?"strong":"");
-    var lab=v<=3?'<span class="tag weak">À travailler</span>':(v===6?'<span class="tag">Solide</span>':'<span class="tag">Correct</span>');
+    var lab=v<=3?'<span class="tag weak">'+t("tw")+'</span>':(v===6?'<span class="tag">'+t("ts")+'</span>':'<span class="tag">'+t("tk")+'</span>');
     var m="";for(var i=1;i<=6;i++)m+='<i'+(i<=v?' class="on"':'')+'></i>';
-    return '<div class="row"><div class="top"><span class="name">'+NAMES[k]+'</span><span>'+lab+' <span class="val">'+v+'/6</span></span></div><div class="meter '+cls+'">'+m+'</div></div>';
+    return '<div class="row"><div class="top"><span class="name">'+N[k]+'</span><span>'+lab+' <span class="val">'+v+'/6</span></span></div><div class="meter '+cls+'">'+m+'</div></div>';
   }).join("");
-  app.innerHTML='<div class="card"><span class="eyebrow">Ton résultat</span>'+
-  '<div class="priority"><span class="theme">Priorité numéro un</span><span class="big">'+NAMES[first]+'</span>'+
-  '<span class="muted">Deuxième thème : '+NAMES[second]+'</span></div></div>'+
-  '<div class="card"><h2>Tes scores</h2>'+rows+'</div>'+
-  exCard(first,"Priorité numéro un")+exCard(second,"Deuxième thème")+unlock(first,second,s,i7s,i8s)+
-  '<div class="card"><h2>Ton profil</h2><dl><dt>Niveau</dt><dd>'+esc(lvl)+'</dd><dt>Rythme</dt><dd>'+esc(freq)+'</dd><dt>Coup qui coûte des points</dt><dd>'+esc(shot)+'</dd><dt>Coup que tu évites</dt><dd>'+esc(avoid)+'</dd>'+
-  (other?'<dt>Autre point faible</dt><dd>'+esc(other)+'</dd>':'')+'</dl>'+
+  app.innerHTML='<div class="card"><span class="eyebrow">'+t("res")+'</span>'+
+  '<div class="priority"><span class="theme">'+t("pri1")+'</span><span class="big">'+N[first]+'</span>'+
+  '<span class="muted">'+t("sec")+C+N[second]+'</span></div></div>'+
+  '<div class="card"><h2>'+t("scores")+'</h2>'+rows+'</div>'+
+  exCard(first,t("pri1"))+exCard(second,t("sec"))+unlock(first,second,s,i7s,i8s)+
+  '<div class="card"><h2>'+t("prof")+'</h2><dl><dt>'+t("lvl")+'</dt><dd>'+esc(lvl)+'</dd><dt>'+t("frq")+'</dt><dd>'+esc(freq)+'</dd><dt>'+t("shc")+'</dt><dd>'+esc(shot)+'</dd><dt>'+t("sha")+'</dt><dd>'+esc(avoid)+'</dd>'+
+  (other?'<dt>'+t("oth")+'</dt><dd>'+esc(other)+'</dd>':'')+'</dl>'+
   '</div>'+
-  '<div class="actions"><button class="primary ball" id="cp">Copier mon résultat</button><button class="secondary" id="re">Refaire le test</button><p class="muted" id="msg" hidden></p></div>';
-  var txt="Diagnostic padel\nPriorité : "+NAMES[first]+" (puis "+NAMES[second]+")\n"+ORDER.map(function(k){return NAMES[k]+" : "+s[k]+"/6"}).join("\n")+"\nCoup qui coûte des points : "+shot+"\nCoup évité : "+avoid+(other?"\nAutre point faible : "+other:"");
+  '<div class="actions"><button class="primary ball" id="cp">'+t("copy")+'</button><button class="secondary" id="re">'+t("again")+'</button><p class="muted" id="msg" hidden></p></div>';
+  var txt=t("head")+"\n"+t("pri1")+C+N[first]+" ("+t("then")+" "+N[second]+")\n"+ORDER.map(function(k){return N[k]+C+s[k]+"/6"}).join("\n")+"\n"+t("shc")+C+shot+"\n"+t("sha")+C+avoid+(other?"\n"+t("oth")+C+other:"");
   var msg=document.getElementById("msg");
   document.getElementById("cp").onclick=function(){
-    function done(t){msg.hidden=false;msg.textContent=t}
-    try{navigator.clipboard.writeText(txt).then(function(){done("Résultat copié. Tu peux le coller dans un message.")},function(){done(txt)})}catch(e){done(txt)}
+    function done(x){msg.hidden=false;msg.textContent=x}
+    try{navigator.clipboard.writeText(txt).then(function(){done(t("copied"))},function(){done(txt)})}catch(e){done(txt)}
   };
   document.getElementById("re").onclick=function(){ans=[];other="";step=-1;render();window.scrollTo(0,0)};
 }
 var LEGAL=["mentions","cgv","confidentialite"];
 function route(){var h=location.hash.slice(1),on=LEGAL.indexOf(h)>-1;app.hidden=on;LEGAL.forEach(function(id){document.getElementById(id).hidden=(id!==h)});if(on)window.scrollTo(0,0)}
+function statics(){
+  document.documentElement.lang=L;
+  document.title=t("title");
+  Array.prototype.forEach.call(document.querySelectorAll("[data-k]"),function(n){n.textContent=t(n.getAttribute("data-k"))});
+  document.getElementById("lang").value=L;
+}
+document.getElementById("lang").onchange=function(){L=this.value;LS.set("gp-lang",L);statics();render();route()};
 window.addEventListener("hashchange",route);
-render();route();
+statics();render();route();
 })();
 </script>
+
 </body>
 </html>
